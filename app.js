@@ -77,12 +77,16 @@ function toggleSidebar() {
 function navigateTo(catId) {
   activeCatId = catId;
   renderNav();
-  renderContent();
-  // close sidebar on mobile after nav
+  if (catId === '__notes__') {
+    renderNotesPage();
+  } else if (catId === '__calendar__') {
+    renderCalendarPage();
+  } else {
+    renderContent();
+  }
   if (window.innerWidth <= 700) {
     document.getElementById('sidebar').classList.remove('open');
   }
-  window.scrollTo(0, 0);
   document.getElementById('content-area').scrollTop = 0;
 }
 
@@ -105,6 +109,18 @@ function renderNav() {
         </div>
       </button>`;
   }).join('');
+
+  // highlight special nav items
+  document.querySelectorAll('.nav-special').forEach(el => {
+    const id = el.getAttribute('onclick').includes('notes') ? '__notes__' : '__calendar__';
+    el.classList.toggle('active', activeCatId === id);
+  });
+
+  // notes count badge
+  try {
+    const notes = JSON.parse(localStorage.getItem('ctf_standalone_notes') || '[]');
+    document.getElementById('notes-count').textContent = notes.length;
+  } catch(_) {}
 }
 
 /* ── OVERALL STATS ───────────────────────────── */
@@ -164,10 +180,14 @@ function renderTopics(cat) {
     const subs = topic.subs.map((sub, si) => {
       const id   = subId(cat.id, ti, si);
       const done = !!state[id];
+      const hasNote = !!getSubnote(id);
       return `
-        <div class="sub-row${done ? ' done' : ''}" data-id="${id}" onclick="toggleSub('${id}','${cat.id}',${ti},${si})">
-          <div class="checkbox${done ? ' checked' : ''}" style="${done ? '--cat-accent:'+cat.accent : ''}"></div>
-          <span class="sub-text">${sub}</span>
+        <div class="sub-row${done ? ' done' : ''}" data-id="${id}">
+          <div class="checkbox${done ? ' checked' : ''}" style="${done ? '--cat-accent:'+cat.accent : ''}"
+               onclick="toggleSub('${id}','${cat.id}',${ti},${si})"></div>
+          <span class="sub-text" onclick="toggleSub('${id}','${cat.id}',${ti},${si})">${sub}</span>
+          <button class="sub-note-btn${hasNote ? ' has-note' : ''}" title="Add note"
+                  onclick="openSubnoteModal('${id}','${cat.id}',${ti},${si})">📝</button>
         </div>`;
     }).join('');
 
@@ -248,6 +268,7 @@ function toggleTopic(catId, topicIdx) {
 
 /* ── EXPAND / COLLAPSE ALL ───────────────────── */
 function expandAll() {
+  if (activeCatId.startsWith('__')) return;
   const cat = CTF_DATA.find(c => c.id === activeCatId);
   cat.topics.forEach((_, ti) => {
     const card = document.getElementById(`tc_${cat.id}_${ti}`);
@@ -259,6 +280,7 @@ function expandAll() {
 }
 
 function collapseAll() {
+  if (activeCatId.startsWith('__')) return;
   const cat = CTF_DATA.find(c => c.id === activeCatId);
   cat.topics.forEach((_, ti) => {
     const card = document.getElementById(`tc_${cat.id}_${ti}`);

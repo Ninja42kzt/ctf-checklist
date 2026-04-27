@@ -1,10 +1,12 @@
-const CACHE = 'ctf-checklist-v1';
+const CACHE = 'ctf-checklist-v2';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
   './data.js',
+  './notes.js',
+  './calendar.js',
   './manifest.json',
   './icon.svg',
   'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap'

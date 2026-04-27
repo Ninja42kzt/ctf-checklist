@@ -30,6 +30,18 @@
 
       <nav id="cat-nav"></nav>
 
+      <!-- SIDEBAR EXTRA PAGES -->
+      <div class="sidebar-divider"></div>
+      <button class="nav-item nav-special" onclick="navigateTo('__notes__')">
+        <span class="nav-icon">📝</span>
+        <span class="nav-text">Notes</span>
+        <span class="nav-pill" id="notes-count">0</span>
+      </button>
+      <button class="nav-item nav-special" onclick="navigateTo('__calendar__')">
+        <span class="nav-icon">📅</span>
+        <span class="nav-text">Calendar</span>
+      </button>
+
       <div class="sidebar-footer">
         <div class="overall-label">overall progress</div>
         <div class="overall-numbers"><span id="nav-done">0</span> / <span id="nav-total">0</span> skills</div>
@@ -62,7 +74,25 @@
   <!-- TOAST -->
   <div id="toast"></div>
 
+  <!-- SUB-NOTE MODAL -->
+  <div id="subnote-modal" class="modal-overlay" onclick="closeSubnoteModal(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title" id="subnote-title">Notes</div>
+        <button class="modal-close" onclick="closeSubnoteModal()">✕</button>
+      </div>
+      <div class="modal-meta" id="subnote-meta"></div>
+      <textarea id="subnote-body" placeholder="Log your progress, commands used, scripts run, findings..."></textarea>
+      <div class="modal-actions">
+        <button class="modal-save" onclick="saveSubnote()">Save note</button>
+        <button class="modal-del" onclick="deleteSubnote()">Clear</button>
+      </div>
+    </div>
+  </div>
+
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script src="notes.js"></script>
+  <script src="calendar.js"></script>
 </body>
 </html>
