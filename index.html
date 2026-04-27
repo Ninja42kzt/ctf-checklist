@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="CTF CyberGames prep checklist — blackheart's full skill tracker" />
+  <title>CTF Prep — blackheart</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#39d353"/><text x="14" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="#0a0a0f">&gt;_</text></svg>
+          <div>
+            <div class="logo-title">ctf prep</div>
+            <div class="logo-sub">blackheart / cybergames 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <nav id="cat-nav"></nav>
+
+      <div class="sidebar-footer">
+        <div class="overall-label">overall progress</div>
+        <div class="overall-numbers"><span id="nav-done">0</span> / <span id="nav-total">0</span> skills</div>
+        <div class="overall-bar-bg"><div class="overall-bar-fill" id="overall-fill"></div></div>
+        <div class="overall-pct" id="overall-pct">0%</div>
+        <button class="reset-btn" onclick="confirmReset()">&#x21BA; reset all progress</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main id="main">
+      <header id="top-bar">
+        <button id="menu-btn" onclick="toggleSidebar()" aria-label="Toggle menu">&#9776;</button>
+        <div id="page-title">loading...</div>
+        <div id="top-actions">
+          <button class="icon-btn" onclick="expandAll()" title="Expand all">&#x25BC;</button>
+          <button class="icon-btn" onclick="collapseAll()" title="Collapse all">&#x25B2;</button>
+          <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">&#9788;</button>
+        </div>
+      </header>
+
+      <div id="content-area">
+        <div id="cat-hero"></div>
+        <div id="topics-list"></div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
